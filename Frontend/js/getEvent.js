@@ -72,3 +72,15 @@ function lightMode(){
   text.children[0].textContent="Light";
   text.children[1].classList.replace('fa-moon-o','fa-sun-o');
 }
+function switchTheme(event){
+  if(event.target.checked){
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+      darkMode();
+  }
+  else{
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+      lightMode();
+  }
+}
