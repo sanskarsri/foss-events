@@ -7,6 +7,16 @@
     --primary-input-border:#e1e4e8;
     --primary-input-background:#fff;
 }
+[data-theme="dark"]{
+    --primary-background:#010409;
+    --primary-border-card:rgba(255,255,255,0.125);
+    --primary-date:#696969;
+    --primary-title:#f0f6fc;
+    --primary-organisation:rgba(245,245,245,0.88);
+    --primary-input-border:#21262d;
+    --primary-input-background:#0d1117;
+}
+
 html,
 body {
     width: 100%;
