@@ -44,7 +44,7 @@ fetch("./Frontend/data/events.json")
   });
 
 // search an event
-let search = document.querySelector('input');
+let search = document.querySelector('.form-control');
 search.addEventListener('keyup', searchTerm);
 
 //function to search the event
