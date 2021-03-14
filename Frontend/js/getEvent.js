@@ -61,3 +61,10 @@ function searchTerm(e){
     }
   })
 }
+
+const toggleSwitch=document.querySelector('.custom-control-input');
+const text=document.querySelector('.custom-control-label');
+function darkMode(){
+  text.children[0].textContent="Dark";
+  text.children[1].classList.replace('fa-sun-o','fa-moon-o');
+}
