@@ -6,9 +6,9 @@ body {
 }
 
 .card-container {
-    width: 100%;
     display: flex;
-    margin-left: 40px;
+    justify-content: space-around;
+    padding-top: 20px;
     flex-wrap: wrap;
     margin-bottom: 150px;
 }
