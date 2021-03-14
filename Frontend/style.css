@@ -5,6 +5,17 @@ body {
     overflow-x: hidden;
 }
 
+.form-control{
+    border:1.5px solid var(--primary-input-border);
+    background-color: var(--primary-input-background); 
+}
+
+.form-control:focus{
+    border:1.5px solid var(--primary-input-border);
+    background-color: var(--primary-input-background);
+    outline:none;
+}
+
 .card-container {
     display: flex;
     justify-content: space-around;
