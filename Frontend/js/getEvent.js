@@ -68,3 +68,7 @@ function darkMode(){
   text.children[0].textContent="Dark";
   text.children[1].classList.replace('fa-sun-o','fa-moon-o');
 }
+function lightMode(){
+  text.children[0].textContent="Light";
+  text.children[1].classList.replace('fa-moon-o','fa-sun-o');
+}
