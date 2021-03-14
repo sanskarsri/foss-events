@@ -32,6 +32,7 @@ fetch("./Frontend/data/events.json")
       link.innerText = "More Info";
       eventLink.appendChild(link);
       let organisation = document.createElement("p");
+      organisation.className="event_organisation";
       organisation.innerHTML = `<b>Organisation: ${res[data].organisation}`;
       let loc = document.createElement("h5");
       loc.className = "location";
@@ -94,4 +95,3 @@ if (currentTheme) {
     darkMode();
   }
 }
-
