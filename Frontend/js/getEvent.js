@@ -32,6 +32,7 @@ fetch("./Frontend/data/events.json")
       link.innerText = "More Info";
       eventLink.appendChild(link);
       let organisation = document.createElement("p");
+      organisation.className="event_organisation";
       organisation.innerHTML = `<b>Organisation: ${res[data].organisation}`;
       let loc = document.createElement("h5");
       loc.className = "location";
@@ -44,7 +45,7 @@ fetch("./Frontend/data/events.json")
   });
 
 // search an event
-let search = document.querySelector('input');
+let search = document.querySelector('.form-control');
 search.addEventListener('keyup', searchTerm);
 
 //function to search the event
@@ -60,4 +61,37 @@ function searchTerm(e){
       eventItem.style.display = 'none';
     }
   })
+}
+
+const toggleSwitch=document.querySelector('.custom-control-input');
+const text=document.querySelector('.custom-control-label');
+function darkMode(){
+  text.children[0].textContent="Dark";
+  text.children[1].classList.replace('fa-sun-o','fa-moon-o');
+}
+function lightMode(){
+  text.children[0].textContent="Light";
+  text.children[1].classList.replace('fa-moon-o','fa-sun-o');
+}
+function switchTheme(event){
+  if(event.target.checked){
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+      darkMode();
+  }
+  else{
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+      lightMode();
+  }
+}
+toggleSwitch.addEventListener('change',switchTheme);
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+  document.documentElement.setAttribute('data-theme', currentTheme);
+
+  if (currentTheme === 'dark') {
+    toggleSwitch.checked = true;
+    darkMode();
+  }
 }
