@@ -36,7 +36,16 @@ fetch("./Frontend/data/events.json")
       organisation.innerHTML = `<b>Organisation: ${res[data].organisation}`;
       let loc = document.createElement("h5");
       loc.className = "location";
-      loc.innerText = res[data].location;
+      let ends=(res[data].end).split("/",3);
+      ends=`${ends[1]}/${ends[0]}/${ends[2]}`;
+      ends=new Date(ends);
+      let finalLoc=res[data].location;
+      if (new Date()>ends)
+      {
+        finalLoc="Offline";
+        loc.className = "locationred";
+      }
+      loc.innerText =finalLoc;//res[data].location;
       eventDetails.append(startDate, endDate, organisation, loc, eventLink);
       eventCard.append(eventTitle, eventDetails);
       emptyDiv.appendChild(eventCard);

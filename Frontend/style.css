@@ -159,6 +159,10 @@ body {
     color: #5cb85c;
     font-weight: bold;
 }
+.locationred {
+    color: #FF0000;
+    font-weight: bold;
+}
 
 footer {
     border-top: 2px solid var(--primary-border-card);
