@@ -35,21 +35,28 @@ fetch("./Frontend/data/events.json")
       organisation.className="event_organisation";
       organisation.innerHTML = `<b>Organisation: ${res[data].organisation}`;
       let loc = document.createElement("h5");
-      loc.className = "location";
-      let ends=(res[data].end).split("/",3);
-      ends=`${ends[1]}/${ends[0]}/${ends[2]}`;
-      ends=new Date(ends);
-      let finalLoc=res[data].location;
-      if (new Date()>ends)
-      {
-        finalLoc="Offline";
-        loc.className = "locationred";
-      }
-      loc.innerText =finalLoc;//res[data].location;
+      let eventStatus=res[data].location;
+      setEventStatus();
+      loc.innerText =eventStatus;
       eventDetails.append(startDate, endDate, organisation, loc, eventLink);
       eventCard.append(eventTitle, eventDetails);
       emptyDiv.appendChild(eventCard);
       cardContainer.appendChild(emptyDiv);
+
+      //function to set the status of event
+      function setEventStatus(){
+        let endDate=(res[data].end).split("/",3);
+        endDate=`${endDate[1]}/${endDate[0]}/${endDate[2]}`;
+        endDate=new Date(endDate);
+        if (new Date()>endDate){
+          eventStatus="Offline";
+          loc.className = "locationOffline";
+        }
+        else{
+          loc.className = "locationOnline";
+        }
+      }
+
     }
   });
 
