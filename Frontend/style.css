@@ -155,8 +155,12 @@ body {
     margin-top: 20px;
 }
 
-.location {
+.locationOnline {
     color: #5cb85c;
+    font-weight: bold;
+}
+.locationOffline {
+    color: #FF0000;
     font-weight: bold;
 }
 
