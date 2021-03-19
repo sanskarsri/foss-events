@@ -45,21 +45,37 @@ fetch("./Frontend/data/events.json")
       eventLink.appendChild(link);
 
       let organisation = document.createElement("p");
+      organisation.className="event_organisation";
       organisation.innerHTML = `<b>Organisation: ${res[data].organisation}`;
 
       let loc = document.createElement("h5");
-      loc.className = "location";
-      loc.innerText = res[data].location;
-
+      let eventStatus=res[data].location;
+      setEventStatus();
+      loc.innerText =eventStatus;
       eventDetails.append(startDate, endDate, organisation, loc, eventLink);
       eventCard.append(eventTitle, eventDetails);
       emptyDiv.appendChild(eventCard);
       cardContainer.appendChild(emptyDiv);
+
+      //function to set the status of event
+      function setEventStatus(){
+        let endDate=(res[data].end).split("/",3);
+        endDate=`${endDate[1]}/${endDate[0]}/${endDate[2]}`;
+        endDate=new Date(endDate);
+        if (new Date()>endDate){
+          eventStatus="Offline";
+          loc.className = "locationOffline";
+        }
+        else{
+          loc.className = "locationOnline";
+        }
+      }
+
     }
   });
 
 // search an event
-let search = document.querySelector('input');
+let search = document.querySelector('.form-control');
 search.addEventListener('keyup', searchTerm);
 
 //function to search the event
@@ -151,3 +167,35 @@ function filterResult(e) {
 
 
 
+const toggleSwitch=document.querySelector('.custom-control-input');
+const text=document.querySelector('.custom-control-label');
+function darkMode(){
+  text.children[0].textContent="Dark";
+  text.children[1].classList.replace('fa-sun-o','fa-moon-o');
+}
+function lightMode(){
+  text.children[0].textContent="Light";
+  text.children[1].classList.replace('fa-moon-o','fa-sun-o');
+}
+function switchTheme(event){
+  if(event.target.checked){
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+      darkMode();
+  }
+  else{
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+      lightMode();
+  }
+}
+toggleSwitch.addEventListener('change',switchTheme);
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+  document.documentElement.setAttribute('data-theme', currentTheme);
+
+  if (currentTheme === 'dark') {
+    toggleSwitch.checked = true;
+    darkMode();
+  }
+}

@@ -89,7 +89,7 @@
   },
   {
     "title":"BOSS - Bountiful Open Source Summer (2021)",
-    "website":"https://boss.codingblocks.com/",
+    "website":"boss.codingblocks.com/",
     "start":"15/05/2021",
     "end":"15/08/2021",
     "organisation":"Coding Blocks Labs",  
@@ -97,10 +97,28 @@
   },
   {
     "title":"24 Pull Requests (2021)",
-    "website":"https://24pullrequests.com/",
+    "website":"24pullrequests.com/",
     "start":"1/12/2021",
     "end":"24/12/2021",
     "organisation":"24 Pull Requests",  
     "location":"Online"
+  },
+  {
+
+    "title": "RAILS GIRLS SUMMER OF CODE",
+    "website": "railsgirlssummerofcode.org",
+    "start": "01/07/2021",
+    "end": "30/09/2021",
+    "organisation": "Travis Foundation",
+    "location": "Online"
+  },
+  {
+    "title": "MOZILLA FESTIVAL",
+    "website": "www.mozillafestival.org/en",
+    "start": "08/03/2021",
+    "end": "14/03/2021",
+    "organisation": "Mozilla Foundation",
+    "location": "Online"
   }
 ]
+
