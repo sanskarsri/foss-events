@@ -35,6 +35,21 @@
     <div class="container-fluid mt-5">
     <!-- Search Bar -->
       <input class="container form-control" placeholder="Search for event here ...">
+      <br>
+
+      
+      <!-- Filter Container-->
+      <div class="form-group text-center">
+        <h5 class="text-center"> Use this filter to get events according to a particular range! </h5>
+        <label>Left Bound <input type="date" class="form-control date-begin"></label>
+        <label>Right Bound <input type="date" class="form-control date-end"></label>
+        <button class="btn btn-primary btn-success input-group-btn" id="filterSubmit">Filter</button>
+      </div>
+          
+      
+    
+
+
       <!-- Card Container -->
       <div class="card-container"></div>
       <!-- Card-Container Ends -->
@@ -74,5 +89,6 @@
       integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"
     ></script>
+    <!-- <script src="Frontend/js/getEvent.js"></script> -->
   </body>
 </html>
