@@ -134,11 +134,7 @@ $ git push
 - **Frontend**: [Frontend development for Beginners](https://www.youtube.com/playlist?list=PL9ooVrP1hQOH2k1SANK5rvq_EAgUKTPoK)
 - **Backend**: [Node.js for Beginners](https://www.youtube.com/playlist?list=PL4cUxeGkcC9gcy9lrvMJ75z9maRw4byYp)
 
-### Hurray!!! You just got closer to completing your hacktoberfest challenge. 😃
-
 #### Happy?? Star ⭐ this Repo. 🤩
-
-#### Check your Hacktoberfest Contribution status at: <a href="https://hacktoberfest.digitalocean.com/profile" target="blank">https://hacktoberfest.digitalocean.com/profile</a>
 
 [![ForTheBadge uses-git](http://ForTheBadge.com/images/badges/uses-git.svg)](https://github.com/DSC-JSS-NOIDA/foss-events)
 [![ForTheBadge uses-html](http://ForTheBadge.com/images/badges/uses-html.svg)](https://github.com/DSC-JSS-NOIDA/foss-events)
