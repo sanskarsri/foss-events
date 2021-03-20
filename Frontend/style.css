@@ -81,7 +81,10 @@ body {
     padding-top: 20px;
     flex-wrap: wrap;
     margin-bottom: 150px;
+
 }
+
+
 
 .empty_div {
     position: relative;
@@ -104,6 +107,12 @@ body {
     transition: all 0.5s ease;
     border-bottom-color: #5cb85c;
     border-bottom-width: 4px;
+    box-shadow: 0 8px 16px 0  #5cb85c;
+}
+
+.event_card:hover {
+    box-shadow: 0 2px 8px 0  #5cb85c;  
+    
 }
 
 .event_card::before {
