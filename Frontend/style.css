@@ -21,7 +21,14 @@ body {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    background-color: var(--primary-background);
+}
+
+/*Particle js background animation*/
+.home-area{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: -1;
 }
 
 .custom-control-input{
@@ -204,3 +211,4 @@ footer {
         font-size: 0.9rem;
     }
 }
+
