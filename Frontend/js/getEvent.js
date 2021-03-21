@@ -32,82 +32,89 @@ fetch("./Frontend/data/events.json")
       link.innerText = "More Info";
       eventLink.appendChild(link);
       let organisation = document.createElement("p");
-      organisation.className="event_organisation";
+      organisation.className = "event_organisation";
       organisation.innerHTML = `<b>Organisation: ${res[data].organisation}`;
       let loc = document.createElement("h5");
-      let eventStatus=res[data].location;
+      let eventStatus = res[data].location;
       setEventStatus();
-      loc.innerText =eventStatus;
+      loc.innerText = eventStatus;
       eventDetails.append(startDate, endDate, organisation, loc, eventLink);
       eventCard.append(eventTitle, eventDetails);
       emptyDiv.appendChild(eventCard);
       cardContainer.appendChild(emptyDiv);
 
       //function to set the status of event
-      function setEventStatus(){
-        let endDate=(res[data].end).split("/",3);
-        endDate=`${endDate[1]}/${endDate[0]}/${endDate[2]}`;
-        endDate=new Date(endDate);
-        if (new Date()>endDate){
-          eventStatus="Offline";
+      function setEventStatus() {
+        let endDate = res[data].end.split("/", 3);
+        endDate = `${endDate[1]}/${endDate[0]}/${endDate[2]}`;
+        endDate = new Date(endDate);
+        if (new Date() > endDate) {
+          eventStatus = "Offline";
           loc.className = "locationOffline";
-        }
-        else{
+        } else {
           loc.className = "locationOnline";
         }
       }
-
     }
   });
 
 // search an event
-let search = document.querySelector('.form-control');
-search.addEventListener('keyup', searchTerm);
+let search = document.querySelector(".form-control");
+search.addEventListener("keyup", searchTerm);
 
 //function to search the event
-function searchTerm(e){
-  let eventList = document.querySelectorAll('.empty_div');
+function searchTerm(e) {
+  let eventList = document.querySelectorAll(".empty_div");
   let input = e.target.value.toLowerCase();
-  Array.from(eventList).forEach( eventItem => {
+  Array.from(eventList).forEach((eventItem) => {
     let toSearch = eventItem.childNodes[0].children[0].childNodes[0].innerText;
-    if( toSearch.toLowerCase().indexOf(input) != -1){
-      eventItem.style.display = 'block';
+    if (toSearch.toLowerCase().indexOf(input) != -1) {
+      eventItem.style.display = "block";
+    } else {
+      eventItem.style.display = "none";
     }
-    else{
-      eventItem.style.display = 'none';
-    }
-  })
+  });
 }
 
-const toggleSwitch=document.querySelector('.custom-control-input');
-const text=document.querySelector('.custom-control-label');
-function darkMode(){
-  text.children[0].textContent="Dark";
-  text.children[1].classList.replace('fa-sun-o','fa-moon-o');
+const toggleSwitch = document.querySelector(".custom-control-input");
+const text = document.querySelector(".custom-control-label");
+function darkMode() {
+  text.children[0].textContent = "Dark";
+  text.children[1].classList.replace("fa-sun-o", "fa-moon-o");
 }
-function lightMode(){
-  text.children[0].textContent="Light";
-  text.children[1].classList.replace('fa-moon-o','fa-sun-o');
+function lightMode() {
+  text.children[0].textContent = "Light";
+  text.children[1].classList.replace("fa-moon-o", "fa-sun-o");
 }
-function switchTheme(event){
-  if(event.target.checked){
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
-      darkMode();
+function switchTheme(event) {
+  if (event.target.checked) {
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
+    darkMode();
+  } else {
+    document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("theme", "light");
+    lightMode();
   }
-  else{
-      document.documentElement.setAttribute('data-theme', 'light');
-      localStorage.setItem('theme', 'light');
-      lightMode();
-  }
 }
-toggleSwitch.addEventListener('change',switchTheme);
-const currentTheme = localStorage.getItem('theme');
+toggleSwitch.addEventListener("change", switchTheme);
+const currentTheme = localStorage.getItem("theme");
 if (currentTheme) {
-  document.documentElement.setAttribute('data-theme', currentTheme);
+  document.documentElement.setAttribute("data-theme", currentTheme);
 
-  if (currentTheme === 'dark') {
+  if (currentTheme === "dark") {
     toggleSwitch.checked = true;
     darkMode();
   }
 }
+
+//Scroll to top
+const Top = document.querySelector(".to-top");
+
+window.addEventListener("scroll", () => {
+  if (window.pageYOffset > 200) {
+    Top.classList.add("active");
+  } else {
+    Top.classList.remove("active");
+  }
+});
