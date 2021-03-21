@@ -16,6 +16,29 @@
     --primary-input-border:#21262d;
     --primary-input-background:#0d1117;
 }
+
+/* custom scroll bar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-thumb {
+    width: 10px;
+    border-radius: 5px;
+    background: #5cb85c;
+}
+::-webkit-scrollbar-thumb:hover{
+    background: #5ce95c; 
+    transition: all 0.10s ease-in-out;
+    filter: blur(20px);
+}
+
+::-webkit-scrollbar-track{
+    width: 0px;
+    margin-right: 15px;
+    background: transparent;
+}
+
+/* Main Style css */
 html,
 body {
     width: 100%;
