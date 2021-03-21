@@ -124,10 +124,10 @@ body {
   .event_card {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     border: 2px solid var(--primary-border-card);
     border-radius: 5px;
-    padding: 0 30px;
+    padding: 30px;
     align-items: center;
     margin: 30px;
     width: 300px;
