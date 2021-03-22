@@ -156,8 +156,14 @@ html {
 }
 
 .event_card .btn {
+  position: relative;
   background-color: #5cb85c;
   border: 1px solid #5cb85c;
+  transition: all 1s ease;
+}
+.event_card .btn:hover {
+  opacity: 0.9;
+  transform: scale(1.1);
 }
 
 .date {
