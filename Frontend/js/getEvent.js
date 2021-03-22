@@ -78,7 +78,6 @@ search.addEventListener("keyup", searchTerm);
 
 //function to search the event
 function searchTerm(e) {
-<<<<<<< HEAD
   var eventList = document.querySelectorAll('.empty_div');
   let input = e.target.value.toLowerCase();
   eventList.forEach(eventItem => {
@@ -88,21 +87,10 @@ function searchTerm(e) {
     }
     else {
       eventItem.style.display = 'none';
-=======
-  let eventList = document.querySelectorAll(".empty_div");
-  let input = e.target.value.toLowerCase();
-  Array.from(eventList).forEach((eventItem) => {
-    let toSearch = eventItem.childNodes[0].children[0].childNodes[0].innerText;
-    if (toSearch.toLowerCase().indexOf(input) != -1) {
-      eventItem.style.display = "block";
-    } else {
-      eventItem.style.display = "none";
->>>>>>> upstream/master
     }
   });
 }
 
-<<<<<<< HEAD
 
 // filter an event 
 let filterBtn = document.getElementById("filterSubmit");
@@ -182,13 +170,6 @@ const text=document.querySelector('.custom-control-label');
 function darkMode(){
   text.children[0].textContent="Dark";
   text.children[1].classList.replace('fa-sun-o','fa-moon-o');
-=======
-const toggleSwitch = document.querySelector(".custom-control-input");
-const text = document.querySelector(".custom-control-label");
-function darkMode() {
-  text.children[0].textContent = "Dark";
-  text.children[1].classList.replace("fa-sun-o", "fa-moon-o");
->>>>>>> upstream/master
 }
 function lightMode() {
   text.children[0].textContent = "Light";
