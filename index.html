@@ -46,11 +46,25 @@
     <div class="home-area" id="particles-js"></div>
     <!-- Main Content -->
     <div class="container-fluid mt-5">
-      <!-- Search Bar -->
-      <input
-        class="container form-control"
-        placeholder="Search for event here ..."
-      />
+
+      <!-- Events Filter -->
+      <div class="d-flex justify-content-center filter-container">
+
+        <!-- Search Filter -->
+        <input class="form-control flex-fill" id="search-filter" placeholder="Search for event here ...">
+        <!-- Search Filter Ends -->
+
+        <!-- Event Status Filter -->
+          <select class="form-control" id="event-status-filter" name="Event Status Filter">
+            <option value="All">Select Event Status</option>
+            <option value="Online">Online</option>
+            <option value="Offline">Offline</option>
+          </select>
+        <!-- Event Status Filter Ends -->
+
+      </div>
+      <!-- Events Filter Ends-->
+
       <!-- Card Container -->
       <div class="card-container"></div>
       <!-- Card-Container Ends -->

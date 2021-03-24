@@ -58,29 +58,56 @@ fetch("./Frontend/data/events.json")
     }
   });
 
-// search an event
-let search = document.querySelector(".form-control");
-search.addEventListener("keyup", searchTerm);
+  
+// Filters for Events
 
-//function to search the event
-function searchTerm(e) {
-  let eventList = document.querySelectorAll(".empty_div");
-  let input = e.target.value.toLowerCase();
-  Array.from(eventList).forEach((eventItem) => {
-    let toSearch = eventItem.childNodes[0].children[0].childNodes[0].innerText;
-    if (toSearch.toLowerCase().indexOf(input) != -1) {
-      eventItem.style.display = "block";
-    } else {
-      eventItem.style.display = "none";
+// Search Filter Element
+let search = document.querySelector('#search-filter');
+search.addEventListener('keyup', applyFilter);
+
+// Event Status Filter Element
+let eventStatusFilterElement = document.querySelector('#event-status-filter');
+eventStatusFilterElement.addEventListener('change', applyFilter);
+
+// Filter Event Function
+function applyFilter(){
+  let eventList = document.querySelectorAll('.empty_div');
+  let searchInput = search.value.toLowerCase();
+  let reqEventStatus = eventStatusFilterElement.value.toLowerCase();
+
+  let reqClass = '';
+  if( reqEventStatus == 'online') {
+    reqClass = '.locationOnline'
+  }
+  else if(reqEventStatus == 'offline') {
+    reqClass = '.locationOffline'
+  }
+  else {
+    reqClass = '.locationOnline, .locationOffline'
+  }
+
+  Array.from(eventList).forEach( eventItem => {
+
+    let currentEventStatus = eventItem.querySelector(reqClass)  
+    let eventTitle = eventItem.querySelector('.event_title').innerText.toLowerCase()
+
+    if (currentEventStatus && eventTitle.indexOf(searchInput) != -1){
+      eventItem.style.display = 'block';
+    }
+    else{
+      eventItem.style.display = 'none';
     }
   });
 }
 
-const toggleSwitch = document.querySelector(".custom-control-input");
-const text = document.querySelector(".custom-control-label");
-function darkMode() {
-  text.children[0].textContent = "Dark";
-  text.children[1].classList.replace("fa-sun-o", "fa-moon-o");
+// Filters for Event Ends
+
+
+const toggleSwitch=document.querySelector('.custom-control-input');
+const text=document.querySelector('.custom-control-label');
+function darkMode(){
+  text.children[0].textContent="Dark";
+  text.children[1].classList.replace('fa-sun-o','fa-moon-o');
 }
 function lightMode() {
   text.children[0].textContent = "Light";
