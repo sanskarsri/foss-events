@@ -43,8 +43,10 @@
 /* Main Style css */
 html,
 body {
-  width: 100%;
+   width: 100%;
   overflow-x: hidden;
+  z-index:-10;
+  background-color: var(--primary-background);
 }
 
 html {
@@ -57,6 +59,15 @@ html {
   width: 100%;
   position: fixed;
   z-index: -1;
+}
+
+#contents-page{
+  z-index:10;
+  position:absolute;
+}
+
+.filter-labels{
+  color:var(--primary-title);
 }
 
 .container-fluid {
