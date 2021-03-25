@@ -57,6 +57,10 @@ html {
   z-index: -1;
 }
 
+.container-fluid {
+  margin-top: 20vh !important;
+}
+
 .custom-control-input {
   margin-right: 10px;
 }
@@ -96,10 +100,24 @@ html {
   margin-right: 30px;
 }
 
-.form-control {
-  border: 1.5px solid var(--primary-input-border);
-  background-color: var(--primary-input-background);
-  margin-top: 100px;
+.filter-container {
+  justify-content: center;
+}
+
+.filter-container > * {
+    margin: 0 20px;
+    width: auto;
+}
+
+label {
+  margin-left: 3px;
+  margin-bottom: 0;
+}
+
+
+.form-control{
+    border:1.5px solid var(--primary-input-border);
+    background-color: var(--primary-input-background); 
 }
 
 .form-control:focus {
@@ -262,6 +280,24 @@ footer {
     margin-left: 0px;
   }
 }
+
+@media screen and (max-width: 1000px) {
+
+  .container-fluid {
+    margin-top: 10vh !important;
+  }
+
+  .filter-container {
+    margin: 20px auto;
+    flex-direction: column;
+  }
+
+  .filter-container > * {
+    margin: 10px 0;
+    width: auto;
+  }
+}
+
 
 @media screen and (max-width: 320px) {
   footer {

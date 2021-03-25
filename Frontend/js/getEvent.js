@@ -58,98 +58,114 @@ fetch("./Frontend/data/events.json")
     }
   });
 
-// search an event
-let search = document.querySelector(".form-control");
-search.addEventListener("keyup", searchTerm);
+  
+// Filters for Events
 
-//function to search the event
-function searchTerm(e) {
-  var eventList = document.querySelectorAll('.empty_div');
-  let input = e.target.value.toLowerCase();
-  eventList.forEach(eventItem => {
-    let toSearch = eventItem.childNodes[0].children[0].childNodes[0].innerText;
-    if (toSearch.toLowerCase().indexOf(input) != -1) {
-      eventItem.style.display = 'block';
-    }
-    else {
+// Search Filter Element
+let search = document.querySelector('#search-filter');
+search.addEventListener('keyup', applyFilter);
+
+// Event Status Filter Element
+let eventStatusFilterElement = document.querySelector('#event-status-filter');
+eventStatusFilterElement.addEventListener('change', applyFilter);
+
+// Event Range Start Element
+let eventRangeStartElement= document.getElementById("range-start");
+eventRangeStartElement.addEventListener('change', applyFilter);
+
+let eventRangeEndElement = document.getElementById("range-end");
+eventRangeEndElement.addEventListener('change', applyFilter);
+
+// Filter Event Function
+function applyFilter(){
+  let eventList = document.querySelectorAll('.empty_div');
+  Array.from(eventList).forEach( eventItem => {
+    eventItem.style.display = 'block';
+  });
+
+  let searchTerm = search.value.toLowerCase();
+  filterBySearchTerm(searchTerm, eventList);
+
+  let reqStatus = eventStatusFilterElement.value.toLowerCase();
+  filterByStatus(reqStatus, eventList);
+
+  let rangeStart = eventRangeStartElement.valueAsDate;
+  let rangeEnd = eventRangeEndElement.valueAsDate;
+  console.log(rangeStart, rangeEnd)
+  filterByRange(rangeStart, rangeEnd, eventList)
+
+}
+
+// Filter by Search Term
+function filterBySearchTerm(searchTerm, eventList) {
+  Array.from(eventList).forEach( eventItem => {
+
+    let eventTitle = eventItem.querySelector('.event_title').innerText.toLowerCase()
+
+    if (eventTitle.indexOf(searchTerm) == -1){
       eventItem.style.display = 'none';
     }
   });
 }
 
-
-// filter an event 
-let filterBtn = document.getElementById("filterSubmit");
-filterBtn.addEventListener('click', filterResult);
-
-// function to filter events
-function filterResult(e) {
-
-  var startFilter = document.getElementsByClassName("date-begin");
-  var endFilter = document.getElementsByClassName("date-end");
-
-  // checking that the value should not be null for both the input
-  if (startFilter[0].valueAsDate === null || endFilter[0].valueAsDate === null)
-    alert("Enter both the fields");
-
-
-  // the start date should always be less than end date 
-  else if (+(startFilter[0].valueAsDate) >= +(endFilter[0].valueAsDate))
-    alert("The Start Filter should be less than end Filter")
-
-  else {
-    // getting the left bound of the input range
-    var splitLeft = (startFilter[0].value).split('-');
-    var leftDate = new Date(splitLeft[0], splitLeft[1] - 1, splitLeft[2]);
-
-
-    // getting the right bound of the input range
-    var splitRight = (endFilter[0].value).split('-');
-    var rightDate = new Date(splitRight[0], splitRight[1] - 1, splitRight[2]);
-
-    var eventList = document.querySelectorAll('.empty_div');
-
-    eventList.forEach((event) => {
-      // getting the start dates for all events
-      var innerDate = (event.childNodes[0].children[1].childNodes[0].innerText);
-      var startSplit = ((innerDate.split(':'))[1]).split('/')
-
-      var startDate = new Date(startSplit[2], startSplit[1] - 1, startSplit[0]);
-      
-
-
-      // getting the end dates for all events
-      var outerDate = (event.childNodes[0].children[1].childNodes[1].innerText);
-      var endSplit = ((outerDate.split(':'))[1]).split('/')
-
-      var endDate = new Date(endSplit[2], endSplit[1] - 1, endSplit[0]);
-     
-
-
-      // comparison between the dates
-      if (rightDate > startDate && leftDate < endDate)
-        event.style.display = 'block';
-      else {
-        event.style.display = 'none';
-      }
-
-    })
+// Filter by Status
+function filterByStatus(reqStatus, eventList) {
+  let notReqClass = '';
+  if( reqStatus == 'online') {
+    notReqClass = '.locationOffline'
   }
+  else if(reqStatus == 'offline') {
+    notReqClass = '.locationOnline'
+  }
+  else {
+    return;
+  }
+
+  Array.from(eventList).forEach( eventItem => {
+
+    let currentEventStatus = eventItem.querySelector(notReqClass)  
+
+    if (currentEventStatus) {
+      eventItem.style.display = 'none';
+    }
+
+  });
 }
 
+// Filter by Range
+function filterByRange(rangeStart, rangeEnd, eventList) {
+  if(rangeStart == null) {
+    rangeStart = new Date('0001-01-01T00:00:00Z');
+  }
 
+  if(rangeEnd == null) {  
+    rangeEnd = new Date((new Date().getFullYear()) + 100,1,1);
+  }
 
+  // the rangeStart should always be less than rangeEnd
+  if (rangeStart.getTime() >= rangeEnd.getTime()) {
+    alert("The Range Start should be less than Range End");
+    return;
+  }
 
+  Array.from(eventList).forEach( eventItem => {
 
- 
+    let eventStartDateStr = eventItem.querySelectorAll(".date")[0].innerText.split(':')[1].split('/')
+    let eventEndDateStr = eventItem.querySelectorAll(".date")[1].innerText.split(':')[1].split('/')
 
+    
+    let eventStartDate = new Date(eventStartDateStr[2], eventStartDateStr[1] - 1, eventStartDateStr[0]);
+    let eventEndDate = new Date(eventEndDateStr[2], eventEndDateStr[1] - 1, eventEndDateStr[0]);
 
+    if ( (rangeEnd.getTime() <= eventStartDate.getTime()) || (rangeStart.getTime() >= eventEndDate.getTime())) {
+        eventItem.style.display = 'none';
+    }
 
+  });
 
+}
 
-
-
-
+// Filters for Event Ends
 
 const toggleSwitch=document.querySelector('.custom-control-input');
 const text=document.querySelector('.custom-control-label');
