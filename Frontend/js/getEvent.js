@@ -69,39 +69,103 @@ search.addEventListener('keyup', applyFilter);
 let eventStatusFilterElement = document.querySelector('#event-status-filter');
 eventStatusFilterElement.addEventListener('change', applyFilter);
 
+// Event Range Start Element
+let eventRangeStartElement= document.getElementById("range-start");
+eventRangeStartElement.addEventListener('change', applyFilter);
+
+let eventRangeEndElement = document.getElementById("range-end");
+eventRangeEndElement.addEventListener('change', applyFilter);
+
 // Filter Event Function
 function applyFilter(){
   let eventList = document.querySelectorAll('.empty_div');
-  let searchInput = search.value.toLowerCase();
-  let reqEventStatus = eventStatusFilterElement.value.toLowerCase();
+  Array.from(eventList).forEach( eventItem => {
+    eventItem.style.display = 'block';
+  });
 
-  let reqClass = '';
-  if( reqEventStatus == 'online') {
-    reqClass = '.locationOnline'
-  }
-  else if(reqEventStatus == 'offline') {
-    reqClass = '.locationOffline'
-  }
-  else {
-    reqClass = '.locationOnline, .locationOffline'
-  }
+  let searchTerm = search.value.toLowerCase();
+  filterBySearchTerm(searchTerm, eventList);
 
+  let reqStatus = eventStatusFilterElement.value.toLowerCase();
+  filterByStatus(reqStatus, eventList);
+
+  let rangeStart = eventRangeStartElement.valueAsDate;
+  let rangeEnd = eventRangeEndElement.valueAsDate;
+  console.log(rangeStart, rangeEnd)
+  filterByRange(rangeStart, rangeEnd, eventList)
+
+}
+
+// Filter by Search Term
+function filterBySearchTerm(searchTerm, eventList) {
   Array.from(eventList).forEach( eventItem => {
 
-    let currentEventStatus = eventItem.querySelector(reqClass)  
     let eventTitle = eventItem.querySelector('.event_title').innerText.toLowerCase()
 
-    if (currentEventStatus && eventTitle.indexOf(searchInput) != -1){
-      eventItem.style.display = 'block';
-    }
-    else{
+    if (eventTitle.indexOf(searchTerm) == -1){
       eventItem.style.display = 'none';
     }
   });
 }
 
-// Filters for Event Ends
+// Filter by Status
+function filterByStatus(reqStatus, eventList) {
+  let notReqClass = '';
+  if( reqStatus == 'online') {
+    notReqClass = '.locationOffline'
+  }
+  else if(reqStatus == 'offline') {
+    notReqClass = '.locationOnline'
+  }
+  else {
+    return;
+  }
 
+  Array.from(eventList).forEach( eventItem => {
+
+    let currentEventStatus = eventItem.querySelector(notReqClass)  
+
+    if (currentEventStatus) {
+      eventItem.style.display = 'none';
+    }
+
+  });
+}
+
+// Filter by Range
+function filterByRange(rangeStart, rangeEnd, eventList) {
+  if(rangeStart == null) {
+    rangeStart = new Date('0001-01-01T00:00:00Z');
+  }
+
+  if(rangeEnd == null) {  
+    rangeEnd = new Date((new Date().getFullYear()) + 100,1,1);
+  }
+
+  // the rangeStart should always be less than rangeEnd
+  if (rangeStart.getTime() >= rangeEnd.getTime()) {
+    alert("The Range Start should be less than Range End");
+    return;
+  }
+
+  Array.from(eventList).forEach( eventItem => {
+
+    let eventStartDateStr = eventItem.querySelectorAll(".date")[0].innerText.split(':')[1].split('/')
+    let eventEndDateStr = eventItem.querySelectorAll(".date")[1].innerText.split(':')[1].split('/')
+
+    
+    let eventStartDate = new Date(eventStartDateStr[2], eventStartDateStr[1] - 1, eventStartDateStr[0]);
+    let eventEndDate = new Date(eventEndDateStr[2], eventEndDateStr[1] - 1, eventEndDateStr[0]);
+
+    if ( (rangeEnd.getTime() <= eventStartDate.getTime()) || (rangeStart.getTime() >= eventEndDate.getTime())) {
+        eventItem.style.display = 'none';
+    }
+
+  });
+
+}
+
+// Filters for Event Ends
 
 const toggleSwitch=document.querySelector('.custom-control-input');
 const text=document.querySelector('.custom-control-label');
