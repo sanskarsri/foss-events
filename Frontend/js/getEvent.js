@@ -64,23 +64,98 @@ search.addEventListener("keyup", searchTerm);
 
 //function to search the event
 function searchTerm(e) {
-  let eventList = document.querySelectorAll(".empty_div");
+  var eventList = document.querySelectorAll('.empty_div');
   let input = e.target.value.toLowerCase();
-  Array.from(eventList).forEach((eventItem) => {
+  eventList.forEach(eventItem => {
     let toSearch = eventItem.childNodes[0].children[0].childNodes[0].innerText;
     if (toSearch.toLowerCase().indexOf(input) != -1) {
-      eventItem.style.display = "block";
-    } else {
-      eventItem.style.display = "none";
+      eventItem.style.display = 'block';
+    }
+    else {
+      eventItem.style.display = 'none';
     }
   });
 }
 
-const toggleSwitch = document.querySelector(".custom-control-input");
-const text = document.querySelector(".custom-control-label");
-function darkMode() {
-  text.children[0].textContent = "Dark";
-  text.children[1].classList.replace("fa-sun-o", "fa-moon-o");
+
+// filter an event 
+let filterBtn = document.getElementById("filterSubmit");
+filterBtn.addEventListener('click', filterResult);
+
+// function to filter events
+function filterResult(e) {
+
+  var startFilter = document.getElementsByClassName("date-begin");
+  var endFilter = document.getElementsByClassName("date-end");
+
+  // checking that the value should not be null for both the input
+  if (startFilter[0].valueAsDate === null || endFilter[0].valueAsDate === null)
+    alert("Enter both the fields");
+
+
+  // the start date should always be less than end date 
+  else if (+(startFilter[0].valueAsDate) >= +(endFilter[0].valueAsDate))
+    alert("The Start Filter should be less than end Filter")
+
+  else {
+    // getting the left bound of the input range
+    var splitLeft = (startFilter[0].value).split('-');
+    var leftDate = new Date(splitLeft[0], splitLeft[1] - 1, splitLeft[2]);
+
+
+    // getting the right bound of the input range
+    var splitRight = (endFilter[0].value).split('-');
+    var rightDate = new Date(splitRight[0], splitRight[1] - 1, splitRight[2]);
+
+    var eventList = document.querySelectorAll('.empty_div');
+
+    eventList.forEach((event) => {
+      // getting the start dates for all events
+      var innerDate = (event.childNodes[0].children[1].childNodes[0].innerText);
+      var startSplit = ((innerDate.split(':'))[1]).split('/')
+
+      var startDate = new Date(startSplit[2], startSplit[1] - 1, startSplit[0]);
+      
+
+
+      // getting the end dates for all events
+      var outerDate = (event.childNodes[0].children[1].childNodes[1].innerText);
+      var endSplit = ((outerDate.split(':'))[1]).split('/')
+
+      var endDate = new Date(endSplit[2], endSplit[1] - 1, endSplit[0]);
+     
+
+
+      // comparison between the dates
+      if (rightDate > startDate && leftDate < endDate)
+        event.style.display = 'block';
+      else {
+        event.style.display = 'none';
+      }
+
+    })
+  }
+}
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+const toggleSwitch=document.querySelector('.custom-control-input');
+const text=document.querySelector('.custom-control-label');
+function darkMode(){
+  text.children[0].textContent="Dark";
+  text.children[1].classList.replace('fa-sun-o','fa-moon-o');
 }
 function lightMode() {
   text.children[0].textContent = "Light";
