@@ -43,6 +43,7 @@ html,
 body {
   width: 100%;
   overflow-x: hidden;
+  background-color: var(--primary-background);
 }
 
 html {
@@ -117,7 +118,7 @@ label {
 
 .form-control{
     border:1.5px solid var(--primary-input-border);
-    background-color: var(--primary-input-background); 
+    background-color: var(--primary-input-background);
 }
 
 .form-control:focus {
