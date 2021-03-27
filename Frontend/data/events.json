@@ -183,6 +183,14 @@
     "end": "21/08/2021",
     "organisation": "Red Hat, Linux Foundation",
     "location": "Online"
+  },
+  {
+    "title": "Redox OS Summer of Code",
+    "website": "www.redox-os.org/rsoc/",
+    "start": "01/03/2021",
+    "end": "01/07/2021",
+    "organisation": "Redox Foundation, Github",
+    "location": "Online"
   }
 ]
 
