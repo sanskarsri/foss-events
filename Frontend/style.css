@@ -131,12 +131,22 @@ label {
 .form-control{
     border:1.5px solid var(--primary-input-border);
     background-color: var(--primary-input-background);
+    padding-left: 30px;
 }
 
 .form-control:focus {
   border: 1.5px solid var(--primary-input-border);
   background-color: var(--primary-input-background);
   outline: none;
+}
+
+.form-group i{
+  position: absolute;
+}
+
+.icon{
+  padding: 10px;
+  min-width: 40px;
 }
 
 .card-container {
