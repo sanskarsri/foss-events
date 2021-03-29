@@ -58,29 +58,120 @@ fetch("./Frontend/data/events.json")
     }
   });
 
-// search an event
-let search = document.querySelector(".form-control");
-search.addEventListener("keyup", searchTerm);
+  
+// Filters for Events
 
-//function to search the event
-function searchTerm(e) {
-  let eventList = document.querySelectorAll(".empty_div");
-  let input = e.target.value.toLowerCase();
-  Array.from(eventList).forEach((eventItem) => {
-    let toSearch = eventItem.childNodes[0].children[0].childNodes[0].innerText;
-    if (toSearch.toLowerCase().indexOf(input) != -1) {
-      eventItem.style.display = "block";
-    } else {
-      eventItem.style.display = "none";
+// Search Filter Element
+let search = document.querySelector('#search-filter');
+search.addEventListener('keyup', applyFilter);
+
+// Event Status Filter Element
+let eventStatusFilterElement = document.querySelector('#event-status-filter');
+eventStatusFilterElement.addEventListener('change', applyFilter);
+
+// Event Range Start Element
+let eventRangeStartElement= document.getElementById("range-start");
+eventRangeStartElement.addEventListener('change', applyFilter);
+
+let eventRangeEndElement = document.getElementById("range-end");
+eventRangeEndElement.addEventListener('change', applyFilter);
+
+// Filter Event Function
+function applyFilter(){
+  let eventList = document.querySelectorAll('.empty_div');
+  Array.from(eventList).forEach( eventItem => {
+    eventItem.style.display = 'block';
+  });
+
+  let searchTerm = search.value.toLowerCase();
+  filterBySearchTerm(searchTerm, eventList);
+
+  let reqStatus = eventStatusFilterElement.value.toLowerCase();
+  filterByStatus(reqStatus, eventList);
+
+  let rangeStart = eventRangeStartElement.valueAsDate;
+  let rangeEnd = eventRangeEndElement.valueAsDate;
+  console.log(rangeStart, rangeEnd)
+  filterByRange(rangeStart, rangeEnd, eventList)
+
+}
+
+// Filter by Search Term
+function filterBySearchTerm(searchTerm, eventList) {
+  Array.from(eventList).forEach( eventItem => {
+
+    let eventTitle = eventItem.querySelector('.event_title').innerText.toLowerCase()
+
+    if (eventTitle.indexOf(searchTerm) == -1){
+      eventItem.style.display = 'none';
     }
   });
 }
 
-const toggleSwitch = document.querySelector(".custom-control-input");
-const text = document.querySelector(".custom-control-label");
-function darkMode() {
-  text.children[0].textContent = "Dark";
-  text.children[1].classList.replace("fa-sun-o", "fa-moon-o");
+// Filter by Status
+function filterByStatus(reqStatus, eventList) {
+  let notReqClass = '';
+  if( reqStatus == 'online') {
+    notReqClass = '.locationOffline'
+  }
+  else if(reqStatus == 'offline') {
+    notReqClass = '.locationOnline'
+  }
+  else {
+    return;
+  }
+
+  Array.from(eventList).forEach( eventItem => {
+
+    let currentEventStatus = eventItem.querySelector(notReqClass)  
+
+    if (currentEventStatus) {
+      eventItem.style.display = 'none';
+    }
+
+  });
+}
+
+// Filter by Range
+function filterByRange(rangeStart, rangeEnd, eventList) {
+  if(rangeStart == null) {
+    rangeStart = new Date('0001-01-01T00:00:00Z');
+  }
+
+  if(rangeEnd == null) {  
+    rangeEnd = new Date((new Date().getFullYear()) + 100,1,1);
+  }
+
+  // the rangeStart should always be less than rangeEnd
+  if (rangeStart.getTime() >= rangeEnd.getTime()) {
+    alert("The Range Start should be less than Range End");
+    return;
+  }
+
+  Array.from(eventList).forEach( eventItem => {
+
+    let eventStartDateStr = eventItem.querySelectorAll(".date")[0].innerText.split(':')[1].split('/')
+    let eventEndDateStr = eventItem.querySelectorAll(".date")[1].innerText.split(':')[1].split('/')
+
+    
+    let eventStartDate = new Date(eventStartDateStr[2], eventStartDateStr[1] - 1, eventStartDateStr[0]);
+    let eventEndDate = new Date(eventEndDateStr[2], eventEndDateStr[1] - 1, eventEndDateStr[0]);
+
+    if ( (rangeEnd.getTime() <= eventStartDate.getTime()) || (rangeStart.getTime() >= eventEndDate.getTime())) {
+        eventItem.style.display = 'none';
+    }
+
+  });
+
+}
+
+// Filters for Event Ends
+
+const toggleSwitch=document.querySelector('.custom-control-input');
+const text=document.querySelector('.custom-control-label');
+function darkMode(){
+  text.children[0].textContent="Dark";
+  text.children[1].classList.replace('fa-sun-o','fa-moon-o');
 }
 function lightMode() {
   text.children[0].textContent = "Light";
@@ -118,3 +209,54 @@ window.addEventListener("scroll", () => {
     Top.classList.remove("active");
   }
 });
+
+window.addEventListener("DOMContentLoaded", function () {
+  // get the form elements defined in your form HTML above
+
+  var form = document.getElementById("my-form");
+  var name = document.getElementById("validationCustom01");
+  var email = document.getElementById("validationCustom02");
+  var message = document.getElementById("validationCustom03");
+  // var button = document.getElementById("my-form-button");
+  var status = document.getElementById("status");
+  // Success and Error functions for after the form is submitted
+
+  function success() {
+    form.value='';
+    name.value='';
+    email.value='';
+    message.value='';
+    status.classList.add("success");
+    status.innerHTML = "Thanks!";
+  }
+
+  function error() {
+    status.classList.add("error");
+    status.innerHTML = "Oops! There was a problem.";
+  }
+
+  // handle the form submission event
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var data = new FormData(form);
+    ajax(form.method, form.action, data, success, error);
+  });
+});
+
+// helper function for sending an AJAX request
+
+function ajax(method, url, data, success, error) {
+  var xhr = new XMLHttpRequest();
+  xhr.open(method, url);
+  xhr.setRequestHeader("Accept", "application/json");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState !== XMLHttpRequest.DONE) return;
+    if (xhr.status === 200) {
+      success(xhr.response, xhr.responseType);
+    } else {
+      error(xhr.status, xhr.response, xhr.responseType);
+    }
+  };
+  xhr.send(data);
+}
