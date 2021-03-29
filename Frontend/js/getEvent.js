@@ -168,24 +168,13 @@ function filterByRange(rangeStart, rangeEnd, eventList) {
 // Filters for Event Ends
 
 const toggleSwitch=document.querySelector('.custom-control-input');
-const text=document.querySelector('.custom-control-label');
-function darkMode(){
-  text.children[0].textContent="Dark";
-  text.children[1].classList.replace('fa-sun-o','fa-moon-o');
-}
-function lightMode() {
-  text.children[0].textContent = "Light";
-  text.children[1].classList.replace("fa-moon-o", "fa-sun-o");
-}
 function switchTheme(event) {
   if (event.target.checked) {
     document.documentElement.setAttribute("data-theme", "dark");
     localStorage.setItem("theme", "dark");
-    darkMode();
   } else {
     document.documentElement.setAttribute("data-theme", "light");
     localStorage.setItem("theme", "light");
-    lightMode();
   }
 }
 toggleSwitch.addEventListener("change", switchTheme);
@@ -195,7 +184,6 @@ if (currentTheme) {
 
   if (currentTheme === "dark") {
     toggleSwitch.checked = true;
-    darkMode();
   }
 }
 
