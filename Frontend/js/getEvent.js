@@ -62,7 +62,10 @@ fetch("./Frontend/data/events.json")
 // Filters for Events
 
 // Search Filter Element
-let search = document.querySelector('#search-filter');
+const searchWrapper = document.querySelector(".search-input");
+const search = searchWrapper.querySelector("input");
+const suggBox = searchWrapper.querySelector(".autocom-box");
+const icon = searchWrapper.querySelector("i");
 search.addEventListener('keyup', applyFilter);
 
 // Event Status Filter Element
@@ -84,7 +87,7 @@ function applyFilter(){
   });
 
   let searchTerm = search.value.toLowerCase();
-  filterBySearchTerm(searchTerm, eventList);
+  filterBySearchTerm(searchTerm, eventList,1);
 
   let reqStatus = eventStatusFilterElement.value.toLowerCase();
   filterByStatus(reqStatus, eventList);
@@ -97,154 +100,13 @@ function applyFilter(){
 }
 
 // Filter by Search Term
-function filterBySearchTerm(searchTerm, eventList) {
+function filterBySearchTerm(searchTerm, eventList,check) {
+  if(check == 1){
+    let userData = searchTerm; //user enetered data
+  let suggestions=[];
   Array.from(eventList).forEach( eventItem => {
-
-    let eventTitle = eventItem.querySelector('.event_title').innerText.toLowerCase()
-
-    if (eventTitle.indexOf(searchTerm) == -1){
-      eventItem.style.display = 'none';
-    }
-  });
-}
-
-// Filter by Status
-function filterByStatus(reqStatus, eventList) {
-  let notReqClass = '';
-  if( reqStatus == 'online') {
-    notReqClass = '.locationOffline'
-  }
-  else if(reqStatus == 'offline') {
-    notReqClass = '.locationOnline'
-  }
-  else {
-    return;
-  }
-
-  Array.from(eventList).forEach( eventItem => {
-
-    let currentEventStatus = eventItem.querySelector(notReqClass)  
-
-    if (currentEventStatus) {
-      eventItem.style.display = 'none';
-    }
-
-  });
-}
-
-// Filter by Range
-function filterByRange(rangeStart, rangeEnd, eventList) {
-  if(rangeStart == null) {
-    rangeStart = new Date('0001-01-01T00:00:00Z');
-  }
-
-  if(rangeEnd == null) {  
-    rangeEnd = new Date((new Date().getFullYear()) + 100,1,1);
-  }
-
-  // the rangeStart should always be less than rangeEnd
-  if (rangeStart.getTime() >= rangeEnd.getTime()) {
-    alert("The Range Start should be less than Range End");
-    return;
-  }
-
-  Array.from(eventList).forEach( eventItem => {
-
-    let eventStartDateStr = eventItem.querySelectorAll(".date")[0].innerText.split(':')[1].split('/')
-    let eventEndDateStr = eventItem.querySelectorAll(".date")[1].innerText.split(':')[1].split('/')
-
-    
-    let eventStartDate = new Date(eventStartDateStr[2], eventStartDateStr[1] - 1, eventStartDateStr[0]);
-    let eventEndDate = new Date(eventEndDateStr[2], eventEndDateStr[1] - 1, eventEndDateStr[0]);
-
-    if ( (rangeEnd.getTime() <= eventStartDate.getTime()) || (rangeStart.getTime() >= eventEndDate.getTime())) {
-        eventItem.style.display = 'none';
-    }
-
+    let eventTitle = eventItem.querySelector('.event_title').innerText.toLowerCase();
+    console.log(eventTitle);
+    suggestions.push(eventTitle);
   });
 
-}
-
-// Filters for Event Ends
-
-const toggleSwitch=document.querySelector('.custom-control-input');
-function switchTheme(event) {
-  if (event.target.checked) {
-    document.documentElement.setAttribute("data-theme", "dark");
-    localStorage.setItem("theme", "dark");
-  } else {
-    document.documentElement.setAttribute("data-theme", "light");
-    localStorage.setItem("theme", "light");
-  }
-}
-toggleSwitch.addEventListener("change", switchTheme);
-const currentTheme = localStorage.getItem("theme");
-if (currentTheme) {
-  document.documentElement.setAttribute("data-theme", currentTheme);
-
-  if (currentTheme === "dark") {
-    toggleSwitch.checked = true;
-  }
-}
-
-//Scroll to top
-const Top = document.querySelector(".to-top");
-
-window.addEventListener("scroll", () => {
-  if (window.pageYOffset > 200) {
-    Top.classList.add("active");
-  } else {
-    Top.classList.remove("active");
-  }
-});
-
-window.addEventListener("DOMContentLoaded", function () {
-  // get the form elements defined in your form HTML above
-
-  var form = document.getElementById("my-form");
-  var name = document.getElementById("validationCustom01");
-  var email = document.getElementById("validationCustom02");
-  var message = document.getElementById("validationCustom03");
-  // var button = document.getElementById("my-form-button");
-  var status = document.getElementById("status");
-  // Success and Error functions for after the form is submitted
-
-  function success() {
-    form.value='';
-    name.value='';
-    email.value='';
-    message.value='';
-    status.classList.add("success");
-    status.innerHTML = "Thanks!";
-  }
-
-  function error() {
-    status.classList.add("error");
-    status.innerHTML = "Oops! There was a problem.";
-  }
-
-  // handle the form submission event
-
-  form.addEventListener("submit", function (ev) {
-    ev.preventDefault();
-    var data = new FormData(form);
-    ajax(form.method, form.action, data, success, error);
-  });
-});
-
-// helper function for sending an AJAX request
-
-function ajax(method, url, data, success, error) {
-  var xhr = new XMLHttpRequest();
-  xhr.open(method, url);
-  xhr.setRequestHeader("Accept", "application/json");
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState !== XMLHttpRequest.DONE) return;
-    if (xhr.status === 200) {
-      success(xhr.response, xhr.responseType);
-    } else {
-      error(xhr.status, xhr.response, xhr.responseType);
-    }
-  };
-  xhr.send(data);
-}
