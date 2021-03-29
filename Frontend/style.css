@@ -368,6 +368,15 @@ footer {
   padding:70px 0px;
 }
 
+#social-section a:hover{
+  text-decoration: none;
+  
+}
+
+#social-section .footer-details .contacts:hover {
+  color:#5cb85c;
+}
+
 .footer-details{
   font-size: 22px;
   font-weight: 500;
