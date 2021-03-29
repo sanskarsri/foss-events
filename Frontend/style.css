@@ -7,6 +7,7 @@
   --primary-input-border: #e1e4e8;
   --primary-input-background: #fff;
   --primary-contact-background:#dee3de;
+  --primary-search-dropdown:#f0eee4;
 }
 [data-theme="dark"] {
   --primary-background: #010409;
@@ -17,6 +18,7 @@
   --primary-input-border: #21262d;
   --primary-input-background: #0d1117;
   --primary-contact-background:#1a2228;
+  --primary-search-dropdown: #282C35;
 }
 
 /* custom scroll bar */
