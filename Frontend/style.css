@@ -7,6 +7,7 @@
   --primary-input-border: #e1e4e8;
   --primary-input-background: #fff;
   --primary-contact-background:#dee3de;
+  --primary-search-dropdown:#f0eee4;
 }
 [data-theme="dark"] {
   --primary-background: #010409;
@@ -17,6 +18,7 @@
   --primary-input-border: #21262d;
   --primary-input-background: #0d1117;
   --primary-contact-background:#1a2228;
+  --primary-search-dropdown: #282C35;
 }
 
 /* custom scroll bar */
@@ -159,6 +161,51 @@ label {
   margin-bottom: 0;
 }
 
+.search-input{
+  margin-top: 24px!important;
+background: var(--primary-contact-background);
+border-radius: 5px;
+position: relative;
+
+}
+
+.search-input.active input{
+  border-radius: 5px 5px 0 0;
+}
+
+.search-input .autocom-box{
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.search-input.active .autocom-box{
+  padding: 10px 8px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.autocom-box li{
+  list-style: none;
+  padding: 8px 12px;
+  display: none;
+  width: 100%;
+  cursor: default;
+  border-radius: 3px;
+  color:var(--primary-title);
+  background:var(--primary-input-background);
+  border-bottom: 1px solid var(--primary-input-border);
+}
+
+.search-input.active .autocom-box li{
+  text-transform: uppercase;
+  display: block;
+}
+.autocom-box li:hover{
+  background: var(--primary-search-dropdown);
+}
 
 .form-control{
     border:1.5px solid var(--primary-input-border);

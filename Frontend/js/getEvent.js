@@ -62,7 +62,10 @@ fetch("./Frontend/data/events.json")
 // Filters for Events
 
 // Search Filter Element
-let search = document.querySelector('#search-filter');
+const searchWrapper = document.querySelector(".search-input");
+const search = searchWrapper.querySelector("input");
+const suggBox = searchWrapper.querySelector(".autocom-box");
+const icon = searchWrapper.querySelector("i");
 search.addEventListener('keyup', applyFilter);
 
 // Event Status Filter Element
@@ -84,7 +87,7 @@ function applyFilter(){
   });
 
   let searchTerm = search.value.toLowerCase();
-  filterBySearchTerm(searchTerm, eventList);
+  filterBySearchTerm(searchTerm, eventList,1);
 
   let reqStatus = eventStatusFilterElement.value.toLowerCase();
   filterByStatus(reqStatus, eventList);
@@ -97,7 +100,41 @@ function applyFilter(){
 }
 
 // Filter by Search Term
-function filterBySearchTerm(searchTerm, eventList) {
+function filterBySearchTerm(searchTerm, eventList,check) {
+  if(check == 1){
+    let userData = searchTerm; //user enetered data
+  let suggestions=[];
+  Array.from(eventList).forEach( eventItem => {
+    let eventTitle = eventItem.querySelector('.event_title').innerText.toLowerCase();
+    console.log(eventTitle);
+    suggestions.push(eventTitle);
+  });
+
+    let emptyArray = [];
+    if(userData){
+        icon.onclick = ()=>{
+
+        }
+        emptyArray = suggestions.filter((data)=>{
+            //filtering array value and user characters to lowercase and return only those words which are start with user enetered chars
+            return data.toLocaleLowerCase().startsWith(userData.toLocaleLowerCase()); 
+        });
+        emptyArray = emptyArray.map((data)=>{
+            // passing return data inside li tag
+            return data = '<li>'+ data +'</li>';
+        });
+        searchWrapper.classList.add("active"); //show autocomplete box
+        showSuggestions(emptyArray);
+        let allList = suggBox.querySelectorAll("li");
+        for (let i = 0; i < allList.length; i++) {
+            //adding onclick attribute in all li tag
+            allList[i].setAttribute("onclick", "select(this)");
+        }
+    }else{
+        searchWrapper.classList.remove("active"); //hide autocomplete box
+    }
+  }
+  
   Array.from(eventList).forEach( eventItem => {
 
     let eventTitle = eventItem.querySelector('.event_title').innerText.toLowerCase()
@@ -106,6 +143,28 @@ function filterBySearchTerm(searchTerm, eventList) {
       eventItem.style.display = 'none';
     }
   });
+}
+function select(element){
+  let selectData = element.textContent;
+  search.value = selectData.toUpperCase();
+  icon.onclick = ()=>{
+      
+  }
+  searchWrapper.classList.remove("active");
+  let eventList = document.querySelectorAll('.empty_div');
+  let searchTerm = search.value.toLowerCase();
+  filterBySearchTerm(searchTerm, eventList,0);
+}
+
+function showSuggestions(list){
+  let listData;
+  if(!list.length){
+      userValue = search.value;
+      listData = '<li>'+ userValue +'</li>';
+  }else{
+      listData = list.join('');
+  }
+  suggBox.innerHTML = listData;
 }
 
 // Filter by Status
