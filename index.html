@@ -19,6 +19,10 @@
     />
   </head>
   <body>
+  <!--Preloader Class-->
+  <div class="forloader">
+    <div id="loader2"></div> 
+  </div>
      <!--Background animation-->
     <div class="home-area" id="particles-js"></div>
     <div id="contents-page">
@@ -195,5 +199,11 @@
       crossorigin="anonymous"
     ></script>
     </div>
+    <!--Preloader Script-->
+    <script> 
+        $(window).on('load',function(){
+         $('.forloader').addClass('complete')
+        })
+      </script>
   </body>
 </html>
