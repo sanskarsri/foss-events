@@ -191,6 +191,54 @@
     "end": "01/07/2021",
     "organisation": "Redox Foundation, Github",
     "location": "Online"
+  },
+  {
+    "title": "CrossWoc",
+    "website": "crosswoc.ieeedtu.in/",
+    "start": "13/02/2021",
+    "end": "28/03/2021",
+    "organisation": "IEEE DTU, IEEE DTU CS",
+    "location": "Online"
+  },
+  {
+    "title": "DevOps India Summit 2021",
+    "website": "devopsindiasummit.com/",
+    "start": "27/08/2021",
+    "end": "28/08/2021",
+    "organisation": "Xellentro",
+    "location": "Online"
+  },
+  {
+    "title": "Google Summer of Earth Engine",
+    "website": "sites.google.com/view/summerofearthengine/home",
+    "start": "15/03/2021",
+    "end": "15/08/2021",
+    "organisation": "Google",
+    "location": "Online"
+  },
+  {
+    "title": "GUADEC",
+    "website": "events.gnome.org/event/9/",
+    "start": "21/07/2021",
+    "end": "25/07/2021",
+    "organisation": "The GNOME Foundation",
+    "location": "Online"
+  },
+  {
+    "title": "SOCIS – The ESA Summer of Code in Space",
+    "website": "www.esa.int/Enabling_Support/Space_Engineering_Technology/SOCIS_The_ESA_Summer_of_Code_in_Space",
+    "start": "31/03/2021",
+    "end": "01/10/2021",
+    "organisation": "European Space Agency",
+    "location": "Online"
+  },
+  {
+    "title": "OpenTechSummit Europe",
+    "website": "eventyay.com/e/5ac8e4d9",
+    "start": "17/05/2021",
+    "end": "21/05/2021",
+    "organisation": "FOSSASIA",
+    "location": "Online"
   }
 ]
 
